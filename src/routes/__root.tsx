@@ -1,20 +1,16 @@
-import { Outlet, createRootRoute } from '@tanstack/react-router'
-import MenuBar from '@/components/MenuBar'
-import { PrimeReactProvider } from 'primereact/api';
-// theme (choose one)
-import "primereact/resources/themes/lara-light-blue/theme.css"; 
+import { Outlet, createRootRoute } from "@tanstack/react-router"
+import MenuBar from "@/components/MenuBar"
+import { PrimeReactProvider } from "primereact/api"
 
-// core css
-import "primereact/resources/primereact.min.css"; 
-
-// icons
-import "primeicons/primeicons.css";
+import "primereact/resources/themes/lara-light-blue/theme.css"
+import "primereact/resources/primereact.min.css"
+import "primeicons/primeicons.css"
 
 export const Route = createRootRoute({
-  component: () => (
-    <PrimeReactProvider>
-      <MenuBar />
-      <Outlet />
-    </PrimeReactProvider>
-  ),
+	component: () => (
+		<PrimeReactProvider>
+			<MenuBar />
+			<Outlet />
+		</PrimeReactProvider>
+	),
 })

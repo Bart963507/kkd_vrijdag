@@ -1,14 +1,13 @@
-import NewGame from "@/components/NewGame/NewGame"
 import { createFileRoute } from "@tanstack/react-router"
-
-export const Route = createFileRoute("/new-game")({
+import SetupGame from "@/components/SetupGame/SetupGame"
+export const Route = createFileRoute("/setup-game")({
 	component: RouteComponent,
 })
 
 function RouteComponent() {
 	return (
 		<div className="App">
-			<NewGame /> {/* or <SetupGame /> */}
+			<SetupGame />
 		</div>
 	)
 }

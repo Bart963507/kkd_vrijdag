@@ -1,13 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router"
 import "../App.css"
 import StartGame from "@/components/StartGame"
-import fetchTeams from "@/queries/fetchTeams"
 
 export const Route = createFileRoute("/")({
 	component: App,
 })
 
-const teams = fetchTeams()
+// const teams = fetchTeams()
 function App() {
 	return (
 		<div className="App">

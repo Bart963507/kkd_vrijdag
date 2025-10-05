@@ -5,50 +5,69 @@ const today = new Date()
 const formatted = today.toISOString().split("T")[0]
 console.log(formatted) // e.g. "2025-09-26"
 
-export default async function fetchTeams() {
+type TeamInfo = {
+	teamName: string
+	teamLogo: string
+	teamGoals: number
+}
+
+type Match = {
+	date: string
+	awayContestant: {
+		contestantClubName: string
+		contestantLogo: string
+	}
+	homeContestant: {
+		contestantClubName: string
+		contestantLogo: string
+	}
+	scores?: {
+		away?: number
+		home?: number
+	}
+}
+
+type ApiResponse = {
+	matches: Match[]
+}
+
+export default async function createTeamsInfo(): Promise<TeamInfo[]> {
+	const json = await fetchTeams()
+	const teamsInfo = await parseTeams(json)
+	return teamsInfo
+}
+
+const fetchTeams = async function (): Promise<ApiResponse> {
 	try {
 		const response = await fetch(TEAMS_URL)
 		const json = await response.json()
-		console.log(json)
 		return json
 	} catch (error) {
-		console.error("Error fetching teams:", error)
-		return []
+		if (error instanceof Error) {
+			throw new Error(`Error fetching teams: ${error.message}`)
+		} else {
+			throw new Error(`Error fetching teams: ${String(error)}`)
+		}
 	}
 }
-// 	return fetch(request)
-// 		.then((response) => response.json())
-// 		.then((json) => {
-// 			const rawDate = new Date()
-// 			const year = rawDate.getFullYear()
-// 			const month = String(rawDate.getMonth() + 1)
-// 			const day = String(rawDate.getDate())
-// 			const today = `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`
 
-// 			if (debug) {
-// 				json = json.matches
-// 			} else {
-// 				json = json.matches.filter((match) => match.date === today)
-// 			}
-// 			//
-// 			// Process the JSON data
-// 			const objectsArray = json.flatMap((match) => [
-// 				{
-// 					teamName: match.awayContestant.contestantClubName,
-// 					teamLogo: match.awayContestant.contestantLogo,
-// 					teamGoals: match.scores?.away || 0, //it gives an error if there is a 0. So add ternary to check for 0
-// 				},
-// 				{
-// 					teamName: match.homeContestant.contestantClubName,
-// 					teamLogo: match.homeContestant.contestantLogo,
-// 					teamGoals: match.scores?.home || 0,
-// 				},
-// 			])
-// 			return objectsArray
-// 		})
-// 		.catch((error) => {
-// 			// Handle any errors
-// 			console.error("Error fetching teams:", error)
-// 			return [] // Return an empty array or handle the error as needed
-// 		})
-// }
+const parseTeams = async function (json: ApiResponse): Promise<TeamInfo[]> {
+	const today = new Date().toISOString().split("T")[0]
+	const filteredMatches = json.matches.filter(
+		(match: Match) => match.date === today
+	)
+
+	const teamPropsArray = filteredMatches.flatMap((match: Match) => [
+		{
+			teamName: match.awayContestant.contestantClubName,
+			teamLogo: match.awayContestant.contestantLogo,
+			teamGoals: match.scores?.away || 0,
+		},
+		{
+			teamName: match.homeContestant.contestantClubName,
+			teamLogo: match.homeContestant.contestantLogo,
+			teamGoals: match.scores?.home || 0,
+		},
+	])
+	return teamPropsArray
+}

@@ -1,9 +1,8 @@
-const TEAMS_URL =
-	"https://api.keukenkampioendivisie.nl/wp-json/statsperform/v1/current-round"
+// const TEAMS_URL =
+// 	"https://api.keukenkampioendivisie.nl/wp-json/statsperform/v1/current-round"
 
-const today = new Date()
-const formatted = today.toISOString().split("T")[0]
-console.log(formatted) // e.g. "2025-09-26"
+const TEAMS_URL =
+	"https://api.keukenkampioendivisie.nl/wp-json/statsperform/v1/round-schedule"
 
 type TeamInfo = {
 	teamName: string
@@ -33,6 +32,7 @@ type ApiResponse = {
 
 export default async function createTeamsInfo(): Promise<TeamInfo[]> {
 	const json = await fetchTeams()
+	console.log(json)
 	const teamsInfo = await parseTeams(json)
 	return teamsInfo
 }
@@ -52,7 +52,8 @@ const fetchTeams = async function (): Promise<ApiResponse> {
 }
 
 const parseTeams = async function (json: ApiResponse): Promise<TeamInfo[]> {
-	const today = new Date().toISOString().split("T")[0]
+	// const today = new Date().toISOString().split("T")[0]
+	const today = "2025-08-08" // For testing purposes
 	const filteredMatches = json.matches.filter(
 		(match: Match) => match.date === today
 	)

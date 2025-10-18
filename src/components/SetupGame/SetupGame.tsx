@@ -18,7 +18,7 @@ export default function SetupGame() {
 		<Card title="Welkom" className="game-card">
 			<p>Voer de namen van de {players} spelers in:</p>
 			<InputNames count={players} />
-			<Button label="Bevestigen" onClick={() => navigate({ to: "/" })} />
+			<Button label="Bevestigen" onClick={() => navigate({ to: "/game" })} />
 			<Button
 				label="Annuleren"
 				severity="danger"

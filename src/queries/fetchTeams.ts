@@ -4,7 +4,7 @@
 const TEAMS_URL =
 	"https://api.keukenkampioendivisie.nl/wp-json/statsperform/v1/round-schedule"
 
-type TeamInfo = {
+export type TeamInfo = {
 	teamName: string
 	teamLogo: string
 	teamGoals: number
@@ -32,7 +32,6 @@ type ApiResponse = {
 
 export default async function createTeamsInfo(): Promise<TeamInfo[]> {
 	const json = await fetchTeams()
-	console.log(json)
 	const teamsInfo = await parseTeams(json)
 	return teamsInfo
 }

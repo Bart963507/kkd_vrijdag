@@ -30,3 +30,13 @@ code {
 	padding: 10px;
 	font-size: 1rem;
 }
+
+.input-text {
+	width: 80%;
+	padding: 8px;
+	margin: 5px 0;
+	font-size: 1rem;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}

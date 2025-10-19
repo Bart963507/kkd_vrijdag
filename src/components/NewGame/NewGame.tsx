@@ -9,13 +9,17 @@ import { Message } from "primereact/message"
 
 const checkNumberOfTeams = async function (): Promise<number> {
 	const teams = await createTeamsInfo()
-	console.log(teams)
 	return teams.length
 }
 
 export default function NewGame() {
 	const navigate = useNavigate()
-	const { players, teams, setPlayers, setTeams } = useGame()
+	const {
+		playerCount: players,
+		teamCount: teams,
+		updatePlayerCount: setPlayers,
+		updateTeamCount: setTeams,
+	} = useGame()
 	const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
 	const onClickNext = async function () {

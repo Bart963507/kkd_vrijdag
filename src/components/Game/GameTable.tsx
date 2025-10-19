@@ -4,7 +4,15 @@ import { Column } from "primereact/column"
 import useGame from "@/components/context/GameContext"
 
 export default function Game({ teamsInf }: { teamsInf: TeamInfo[] }) {
-	const { players, teams, setPlayers, setTeams } = useGame()
+	const {
+		playerCount: players,
+		teamCount: teams,
+		updatePlayerCount: setPlayers,
+		updateTeamCount: setTeams,
+		players: playerList,
+		initializePlayers: setPlayerList,
+	} = useGame()
+
 	console.log("GameContext in GameTable:", { players, teams })
 	const logoBodyTemplate = (rowData: TeamInfo) => {
 		return (

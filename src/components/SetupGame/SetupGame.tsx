@@ -8,16 +8,17 @@ export default function SetupGame() {
 	const navigate = useNavigate()
 	const gameContext = useGame()
 	console.log("GameContext in SetupGame:", gameContext)
-	const players = gameContext?.players
+	const playerCount = gameContext?.playerCount
+	const setPlayers = gameContext?.initializePlayers
 
-	if (!players) {
+	if (!playerCount) {
 		return <div>Het aantal spelers is niet bekend.</div>
 	}
 
 	return (
 		<Card title="Welkom" className="game-card">
-			<p>Voer de namen van de {players} spelers in:</p>
-			<InputNames count={players} />
+			<p>Voer de namen van de {playerCount} spelers in:</p>
+			<InputNames count={playerCount} />
 			<Button label="Bevestigen" onClick={() => navigate({ to: "/game" })} />
 			<Button
 				label="Annuleren"
@@ -27,8 +28,17 @@ export default function SetupGame() {
 			<Button
 				label="Terug"
 				severity="secondary"
-				onClick={() => navigate({ to: "/new-game" })}
+				onClick={() => setPlayers([])}
 			/>
 		</Card>
 	)
+}
+
+const setUpPlayers = (setPlayers: any) => {
+	const playersArray = []
+	for (let i = 0; i < count; i++) {
+		playersArray.push({ id: i + 1, name: i + 1, assignedTeams: [] })
+	}
+	setPlayers(playersArray)
+	navigate({ to: "/game" })
 }

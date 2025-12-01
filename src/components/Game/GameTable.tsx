@@ -3,7 +3,7 @@ import type { TeamInfo } from "@/queries/fetchTeams"
 import { Column } from "primereact/column"
 import useGame from "@/components/context/GameContext"
 
-export default function Game({ teamsInf }: { teamsInf: TeamInfo[] }) {
+export default function Game({ teamsInfo }: { teamsInfo: TeamInfo[] }) {
 	const {
 		playerCount: players,
 		teamCount: teams,
@@ -14,6 +14,7 @@ export default function Game({ teamsInf }: { teamsInf: TeamInfo[] }) {
 	} = useGame()
 
 	console.log("GameContext in GameTable:", { players, teams })
+	console.log(playerList)
 	const logoBodyTemplate = (rowData: TeamInfo) => {
 		return (
 			<img
@@ -25,7 +26,7 @@ export default function Game({ teamsInf }: { teamsInf: TeamInfo[] }) {
 	}
 
 	return (
-		<DataTable value={teamsInf}>
+		<DataTable value={teamsInfo}>
 			<Column field="teamName" header="Team"></Column>
 			<Column field="teamGoals" header="Goals"></Column>
 			<Column field="teamLogo" header="Logo" body={logoBodyTemplate}></Column>

@@ -1,11 +1,11 @@
 import { createContext, useContext, useState } from "react"
 import type { ReactNode } from "react"
-import type { AssignedTeamInfo } from "@/utils/gameHelpers"
+import type { TeamInfo } from "@/queries/fetchTeams"
 
 export interface Player {
 	id: number
 	name: string
-	assignedTeams: AssignedTeamInfo[]
+	assignedTeams: TeamInfo[]
 }
 
 interface GameContextType {

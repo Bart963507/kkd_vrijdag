@@ -8,7 +8,7 @@ export const Route = createFileRoute("/new-game")({
 function RouteComponent() {
 	return (
 		<div className="App">
-			<NewGame /> {/* or <SetupGame /> */}
+			<NewGame />
 		</div>
 	)
 }

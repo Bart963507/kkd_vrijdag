@@ -8,6 +8,7 @@ export type TeamInfo = {
 	teamName: string
 	teamLogo: string
 	teamGoals: number
+	assigned: boolean
 }
 
 type Match = {
@@ -62,11 +63,13 @@ const parseTeams = async function (json: ApiResponse): Promise<TeamInfo[]> {
 			teamName: match.awayContestant.contestantClubName,
 			teamLogo: match.awayContestant.contestantLogo,
 			teamGoals: match.scores?.away || 0,
+			assigned: false,
 		},
 		{
 			teamName: match.homeContestant.contestantClubName,
 			teamLogo: match.homeContestant.contestantLogo,
 			teamGoals: match.scores?.home || 0,
+			assigned: false,
 		},
 	])
 	return teamPropsArray

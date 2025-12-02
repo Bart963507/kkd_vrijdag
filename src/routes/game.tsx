@@ -15,7 +15,7 @@ function RouteComponent() {
 
 	return (
 		<div className="App">
-			<Game teamsInf={teams} />
+			<Game teamsInfo={teams} />
 		</div>
 	)
 }

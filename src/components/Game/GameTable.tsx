@@ -4,6 +4,7 @@ import { Column } from "primereact/column"
 import useGame from "@/components/context/GameContext"
 import type { Player } from "@/components/context/GameContext"
 import { InputNumber } from "primereact/inputnumber"
+import styles from "./gameStyles.module.css"
 
 export default function Game({ teamsInfo }: { teamsInfo: TeamInfo[] }) {
 	const {
@@ -50,21 +51,30 @@ export default function Game({ teamsInfo }: { teamsInfo: TeamInfo[] }) {
 	const gameTablePlayers = playerToGameTablePlayer(assignedPlayerList)
 
 	return (
-		<DataTable value={gameTablePlayers}>
-			<Column field="name" header="Naam"></Column>
+		<DataTable value={gameTablePlayers} className={styles.gameTable}>
+			<Column
+				field="name"
+				header="Naam"
+				className={styles.gameTableColumn}
+			></Column>
 			<Column
 				field="assignedLogos"
 				header="Clubs"
 				body={logosBodyTemplate}
+				className={styles.gameTableColumn}
 			></Column>
-			<Column field="assignedGoals" header="Goals"></Column>
+			<Column
+				field="assignedGoals"
+				header="Goals"
+				className={styles.gameTableColumn}
+			></Column>
 			<Column
 				header="Aantal"
+				className={styles.gameTableColumn}
 				body={(rowData: GameTablePlayer) => (
 					<InputNumber
 						min={0}
 						className="input-numbers"
-						style={{ width: "100%" }}
 						showButtons
 						buttonLayout="horizontal"
 					/>

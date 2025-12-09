@@ -1,0 +1,33 @@
+.gameTable {
+	width: 60vw; /* Adjust width for smaller screens */
+	border-collapse: collapse;
+	font-family: Arial, sans-serif;
+	margin: auto;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	border: 1px solid #ddd;
+	background-color: #f9f9f9;
+	padding: 10px;
+	margin-top: 5vh; /* Reduce top margin for smaller screens */
+}
+
+.gameTableColumn {
+	text-align: left;
+	padding: 12px;
+	border-bottom: 1px solid #ddd;
+	width: 25%;
+}
+
+/* Add responsive styles for mobile */
+@media (max-width: 768px) {
+	.gameTable {
+		width: 100%; /* Use full width on mobile */
+		margin-top: 2vh; /* Reduce top margin further */
+	}
+
+	.gameTableColumn {
+		padding: 8px; /* Reduce padding for smaller screens */
+		width: auto; /* Allow columns to adjust dynamically */
+		font-size: 14px; /* Adjust font size for readability */
+	}
+}

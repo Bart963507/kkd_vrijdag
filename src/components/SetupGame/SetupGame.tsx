@@ -24,7 +24,7 @@ export default function SetupGame() {
 			assignedTeams: [],
 		}))
 		setPlayers(playersArray)
-		navigate({ to: "/game" })
+		navigate({ to: "/game-reveal" })
 	}
 
 	return (

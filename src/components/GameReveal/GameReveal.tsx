@@ -2,6 +2,8 @@ import useGame from "@/components/context/GameContext"
 import type { TeamInfo } from "@/queries/fetchTeams"
 import type { Player } from "@/components/context/GameContext"
 import styles from "./GameReveal.module.css"
+import { DataTable } from "primereact/datatable"
+import { Column } from "primereact/column"
 
 export default function GameReveal({ teamsInfo }: { teamsInfo: TeamInfo[] }) {
 	const { teamCount: teams, players: playerList } = useGame()
@@ -14,9 +16,23 @@ export default function GameReveal({ teamsInfo }: { teamsInfo: TeamInfo[] }) {
 
 	console.log("Assigned Player List:", assignedPlayerList)
 	return (
-		<div className={styles.gameRevealContainer}>
-			<p>Game Reveal Content Goes Here</p>
-		</div>
+		<DataTable
+			value={assignedPlayerList}
+			className={styles.gameRevealContainer}
+		>
+			<Column field="name" header="Naam"></Column>
+			{/* Dynamically Generated Columns */}
+			{Array.from({ length: teams || 0 }).map((_, index) => (
+				<Column
+					key={index}
+					field={`assignedTeams[${index}].teamName`} // Access team name dynamically
+					header={`Team ${index + 1}`}
+					body={(rowData: Player) =>
+						rowData.assignedTeams[index]?.teamName || "N/A"
+					}
+				></Column>
+			))}
+		</DataTable>
 	)
 }
 

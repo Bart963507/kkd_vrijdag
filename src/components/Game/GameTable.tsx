@@ -1,24 +1,10 @@
 import { DataTable } from "primereact/datatable"
-import type { TeamInfo } from "@/queries/fetchTeams"
 import { Column } from "primereact/column"
-import useGame from "@/components/context/GameContext"
 import type { Player } from "@/components/context/GameContext"
 import { InputNumber } from "primereact/inputnumber"
 import styles from "./gameStyles.module.css"
 
-export default function Game({ teamsInfo }: { teamsInfo: TeamInfo[] }) {
-	const {
-		playerCount: players,
-		teamCount: teams,
-		updatePlayerCount: setPlayers,
-		updateTeamCount: setTeams,
-		players: playerList,
-		initializePlayers: setPlayerList,
-	} = useGame()
-
-	console.log("GameContext in GameTable:", { players, teams })
-	console.log(playerList)
-
+export default function Game(playerList: Player[]) {
 	const logosBodyTemplate = (rowData: GameTablePlayer) => {
 		return (
 			<div style={{ display: "flex", gap: "5px", flexWrap: "wrap" }}>
@@ -43,12 +29,7 @@ export default function Game({ teamsInfo }: { teamsInfo: TeamInfo[] }) {
 		)
 	}
 
-	const assignedPlayerList = assignTeamsToPlayers(
-		teamsInfo,
-		teams || 0,
-		playerList
-	)
-	const gameTablePlayers = playerToGameTablePlayer(assignedPlayerList)
+	const gameTablePlayers = playerToGameTablePlayer(playerList)
 
 	return (
 		<DataTable value={gameTablePlayers} className={styles.gameTable}>
@@ -82,33 +63,6 @@ export default function Game({ teamsInfo }: { teamsInfo: TeamInfo[] }) {
 			></Column>
 		</DataTable>
 	)
-}
-
-function assignTeamsToPlayers(
-	teamsInfo: TeamInfo[],
-	teamsPerPlayer: number,
-	playerList: Player[]
-): Player[] {
-	const availableTeams = [...teamsInfo.filter((team) => !team.assigned)]
-
-	const assignedTeamsPerPlayer = playerList.map((player) => {
-		const playerTeams: TeamInfo[] = []
-		let teamCount = teamsPerPlayer
-
-		while (teamCount > 0 && availableTeams.length > 0) {
-			const randomIndex = Math.floor(Math.random() * availableTeams.length)
-			const team = availableTeams.splice(randomIndex, 1)[0]
-			playerTeams.push(team)
-			teamCount--
-		}
-
-		return {
-			...player,
-			assignedTeams: [...player.assignedTeams, ...playerTeams],
-		}
-	})
-
-	return assignedTeamsPerPlayer
 }
 
 interface GameTablePlayer {

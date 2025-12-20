@@ -19,7 +19,6 @@ export default function Game(playerList: Player[]) {
 							objectFit: "contain",
 						}}
 						onError={(e) => {
-							// Fallback if image fails to load
 							console.error(`Failed to load image: ${logoUrl}`)
 							e.currentTarget.style.display = "none"
 						}}

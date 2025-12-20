@@ -4,32 +4,43 @@ import type { Player } from "@/components/context/GameContext"
 import styles from "./GameReveal.module.css"
 import { DataTable } from "primereact/datatable"
 import { Column } from "primereact/column"
+import { useMemo, useState } from "react"
 
 export default function GameReveal({ teamsInfo }: { teamsInfo: TeamInfo[] }) {
 	const { teamCount: teams, players: playerList } = useGame()
 
-	const assignedPlayerList = assignTeamsToPlayers(
-		teamsInfo,
-		teams || 0,
-		playerList
-	)
+	// Assign teams only once using useMemo
+	const assignedPlayerList = useMemo(() => {
+		return assignTeamsToPlayers(teamsInfo, teams || 0, playerList)
+	}, [teamsInfo, teams, playerList])
 
-	console.log("Assigned Player List:", assignedPlayerList)
 	return (
 		<DataTable
 			value={assignedPlayerList}
 			className={styles.gameRevealContainer}
 		>
 			<Column field="name" header="Naam"></Column>
-			{/* Dynamically Generated Columns */}
-			{Array.from({ length: teams || 0 }).map((_, index) => (
+			{Array.from({ length: teams || 0 }).map((_, teamIndex) => (
 				<Column
-					key={index}
-					field={`assignedTeams[${index}].teamName`} // Access team name dynamically
-					header={`Team ${index + 1}`}
-					body={(rowData: Player) =>
-						rowData.assignedTeams[index]?.teamName || "N/A"
-					}
+					key={teamIndex}
+					field={`assignedTeams[${teamIndex}].teamName`}
+					header={`Team ${teamIndex + 1}`}
+					body={(rowData: Player, rowMeta) => {
+						const playerIndex = rowMeta.rowIndex
+						const totalPlayers = assignedPlayerList.length
+						const globalIndex = 1 + (teamIndex * totalPlayers + playerIndex)
+						return (
+							<img
+								src={rowData.assignedTeams[teamIndex]?.teamLogo}
+								className={styles.logo}
+								style={
+									{
+										"--delay": `${globalIndex * 2}s`,
+									} as any
+								}
+							/>
+						)
+					}}
 				></Column>
 			))}
 		</DataTable>

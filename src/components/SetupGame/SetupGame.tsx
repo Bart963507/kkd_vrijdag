@@ -32,16 +32,6 @@ export default function SetupGame() {
 			<p>Voer de namen van de {playerCount} spelers in:</p>
 			<InputNames count={playerCount} onNamesChange={setPlayerNames} />
 			<Button label="Bevestigen" onClick={setUpPlayers} />
-			<Button
-				label="Annuleren"
-				severity="danger"
-				onClick={() => navigate({ to: "/" })}
-			/>
-			<Button
-				label="Terug"
-				severity="secondary"
-				onClick={() => setPlayers([])}
-			/>
 		</Card>
 	)
 }

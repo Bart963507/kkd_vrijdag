@@ -1,6 +1,7 @@
 import Game from "@/components/Game/GameTable"
 import { createFileRoute } from "@tanstack/react-router"
 import createTeamsInfo from "@/queries/fetchTeams"
+import useGame from "@/components/context/GameContext" // Import useGame
 
 export const Route = createFileRoute("/game")({
 	component: RouteComponent,
@@ -11,11 +12,11 @@ export const Route = createFileRoute("/game")({
 })
 
 function RouteComponent() {
-	const { teams } = Route.useLoaderData()
+	const { players } = useGame()
 
 	return (
 		<div className="App">
-			<Game teamsInfo={teams} />
+			<Game playerList={players} />
 		</div>
 	)
 }

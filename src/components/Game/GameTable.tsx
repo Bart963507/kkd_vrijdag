@@ -4,7 +4,7 @@ import type { Player } from "@/components/context/GameContext"
 import { InputNumber } from "primereact/inputnumber"
 import styles from "./gameStyles.module.css"
 
-export default function Game(playerList: Player[]) {
+export default function Game({ playerList }: { playerList: Player[] }) {
 	const logosBodyTemplate = (rowData: GameTablePlayer) => {
 		return (
 			<div style={{ display: "flex", gap: "5px", flexWrap: "wrap" }}>
@@ -27,8 +27,9 @@ export default function Game(playerList: Player[]) {
 			</div>
 		)
 	}
-
+	console.log("Player List in GameTable:", playerList)
 	const gameTablePlayers = playerToGameTablePlayer(playerList)
+	console.log(gameTablePlayers)
 
 	return (
 		<DataTable value={gameTablePlayers} className={styles.gameTable}>
@@ -51,7 +52,7 @@ export default function Game(playerList: Player[]) {
 			<Column
 				header="Aantal"
 				className={styles.gameTableColumn}
-				body={(rowData: GameTablePlayer) => (
+				body={() => (
 					<InputNumber
 						min={0}
 						className="input-numbers"

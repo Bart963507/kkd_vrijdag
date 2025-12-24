@@ -1,8 +1,7 @@
 import Game from "@/components/Game/GameTable"
 import { createFileRoute } from "@tanstack/react-router"
 import createTeamsInfo from "@/queries/fetchTeams"
-import useGame from "@/components/context/GameContext" // Import useGame
-
+import { useGame } from "@/components/context/GameContext"
 export const Route = createFileRoute("/game")({
 	component: RouteComponent,
 	loader: async () => {

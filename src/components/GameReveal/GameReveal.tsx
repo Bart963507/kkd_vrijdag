@@ -1,51 +1,29 @@
-import useGame from "@/components/context/GameContext"
+import { useGame } from "@/components/context/GameContext"
 import type { TeamInfo } from "@/queries/fetchTeams"
 import type { Player } from "@/components/context/GameContext"
 import styles from "./GameReveal.module.css"
 import { DataTable } from "primereact/datatable"
 import { Column } from "primereact/column"
-import { useMemo } from "react"
+import { useEffect } from "react"
 import { useNavigate } from "@tanstack/react-router"
 import { Button } from "primereact/button"
+import type { ColumnBodyOptions } from "primereact/column"
 
 export default function GameReveal({ teamsInfo }: { teamsInfo: TeamInfo[] }) {
-	const { teamCount: teams, players: playerList } = useGame()
+	const { teamCount: teams, players: playerList, assignTeams } = useGame()
 	const navigate = useNavigate()
-	// Assign teams only once using useMemo
-	const assignedPlayerList = useMemo(() => {
-		return assignTeamsToPlayers(teamsInfo, teams || 0, playerList)
-	}, [teamsInfo, teams, playerList])
+
+	useEffect(() => {
+		assignTeams(teamsInfo, teams || 0)
+	}, [teamsInfo, teams, assignTeams])
 
 	return (
 		<div>
-			<DataTable
-				value={assignedPlayerList}
-				className={styles.gameRevealContainer}
-			>
+			<DataTable value={playerList} className={styles.gameRevealContainer}>
 				<Column field="name" header="Naam"></Column>
-				{Array.from({ length: teams || 0 }).map((_, teamIndex) => (
-					<Column
-						key={teamIndex}
-						field={`assignedTeams[${teamIndex}].teamName`}
-						header={`Team ${teamIndex + 1}`}
-						body={(rowData: Player, rowMeta) => {
-							const playerIndex = rowMeta.rowIndex
-							const totalPlayers = assignedPlayerList.length
-							const globalIndex = 1 + (teamIndex * totalPlayers + playerIndex)
-							return (
-								<img
-									src={rowData.assignedTeams[teamIndex]?.teamLogo}
-									className={styles.logo}
-									style={
-										{
-											"--delay": `${globalIndex * 2}s`,
-										} as any
-									}
-								/>
-							)
-						}}
-					></Column>
-				))}
+				{Array.from({ length: teams || 0 }).map((_, teamIndex) =>
+					createColumns(teamIndex, playerList)
+				)}
 			</DataTable>
 			<Button
 				label="Bevestigen"
@@ -56,29 +34,52 @@ export default function GameReveal({ teamsInfo }: { teamsInfo: TeamInfo[] }) {
 	)
 }
 
-function assignTeamsToPlayers(
-	teamsInfo: TeamInfo[],
-	teamsPerPlayer: number,
-	playerList: Player[]
-): Player[] {
-	const availableTeams = [...teamsInfo.filter((team) => !team.assigned)]
+function createColumns(
+	teamIndex: number,
+	assignedPlayerList: Player[]
+): React.ReactElement {
+	return (
+		<Column
+			key={teamIndex}
+			field={`assignedTeams[${teamIndex}].teamName`}
+			header={`Team ${teamIndex + 1}`}
+			body={(rowData: Player, rowMeta) => {
+				const globalIndex = calcGlobalIndex(
+					teamIndex,
+					assignedPlayerList,
+					rowMeta
+				)
+				const image = renderTeamLogo(rowData, teamIndex, globalIndex)
+				return image
+			}}
+		/>
+	)
+}
 
-	const assignedTeamsPerPlayer = playerList.map((player) => {
-		const playerTeams: TeamInfo[] = []
-		let teamCount = teamsPerPlayer
+function calcGlobalIndex(
+	teamIndex: number,
+	assignedPlayerList: Player[],
+	rowMeta: ColumnBodyOptions
+) {
+	const playerIndex = rowMeta.rowIndex
+	const totalPlayers = assignedPlayerList.length
+	return 1 + (teamIndex * totalPlayers + playerIndex)
+}
 
-		while (teamCount > 0 && availableTeams.length > 0) {
-			const randomIndex = Math.floor(Math.random() * availableTeams.length)
-			const team = availableTeams.splice(randomIndex, 1)[0]
-			playerTeams.push(team)
-			teamCount--
-		}
-
-		return {
-			...player,
-			assignedTeams: [...player.assignedTeams, ...playerTeams],
-		}
-	})
-
-	return assignedTeamsPerPlayer
+function renderTeamLogo(
+	rowData: Player,
+	teamIndex: number,
+	globalIndex: number
+) {
+	return (
+		<img
+			src={rowData.assignedTeams[teamIndex]?.teamLogo}
+			className={styles.logo}
+			style={
+				{
+					"--delay": `${globalIndex * 2}s`,
+				} as any
+			}
+		/>
+	)
 }

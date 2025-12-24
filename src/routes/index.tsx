@@ -6,7 +6,6 @@ export const Route = createFileRoute("/")({
 	component: App,
 })
 
-// const teams = fetchTeams()
 function App() {
 	return (
 		<div className="App">

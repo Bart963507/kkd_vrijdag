@@ -1,7 +1,7 @@
 import { Card } from "primereact/card"
 import { Button } from "primereact/button"
 import { useNavigate } from "@tanstack/react-router"
-import useGame from "@/components/context/GameContext"
+import { useGame } from "@/components/context/GameContext"
 import InputNames from "./InputNames"
 import { useState } from "react"
 
@@ -10,7 +10,7 @@ export default function SetupGame() {
 	const gameContext = useGame()
 	console.log("GameContext in SetupGame:", gameContext)
 	const playerCount = gameContext?.playerCount
-	const setPlayers = gameContext?.initializePlayers
+	const setPlayers = gameContext?.setPlayers
 	const [playerNames, setPlayerNames] = useState<string[]>([])
 
 	if (!playerCount) {

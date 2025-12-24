@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "@tanstack/react-router"
-import useGame from "@/components/context/GameContext"
+import { useGame } from "@/components/context/GameContext"
 import { Card } from "primereact/card"
 import { Button } from "primereact/button"
 import InputNumberGame from "./InputNumberGame"
@@ -17,13 +17,12 @@ export default function NewGame() {
 	const {
 		playerCount: players,
 		teamCount: teams,
-		updatePlayerCount: setPlayers,
-		updateTeamCount: setTeams,
+		setPlayerCount: setPlayers,
+		setTeamCount: setTeams,
 	} = useGame()
 	const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
 	const onClickNext = async function () {
-		// Clear previous error
 		setErrorMessage(null)
 
 		if (players === null || players === 0) {

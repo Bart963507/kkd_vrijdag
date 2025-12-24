@@ -50,7 +50,7 @@ export default function Game({ playerList }: { playerList: Player[] }) {
 				className={styles.gameTableColumn}
 			></Column>
 			<Column
-				header="Aantal"
+				header="🍺"
 				className={styles.gameTableColumn}
 				body={() => (
 					<InputNumber

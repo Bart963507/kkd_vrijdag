@@ -1,4 +1,10 @@
-import { createContext, useContext, useState } from "react"
+import {
+	createContext,
+	useCallback,
+	useContext,
+	useMemo,
+	useState,
+} from "react"
 import type { ReactNode } from "react"
 import type { TeamInfo } from "@/queries/fetchTeams"
 
@@ -11,36 +17,64 @@ export interface Player {
 interface GameContextType {
 	playerCount: number | null
 	teamCount: number | null
-	updatePlayerCount: (count: number | null) => void
-	updateTeamCount: (count: number | null) => void
+	setPlayerCount: (count: number | null) => void
+	setTeamCount: (count: number | null) => void
 	players: Player[]
-	initializePlayers: (players: Player[]) => void
+	setPlayers: React.Dispatch<React.SetStateAction<Player[]>>
+	assignTeams: (teams: TeamInfo[], teamsPerPlayer: number) => void
 }
 
-const GameContext = createContext<GameContextType | undefined>(undefined)
+const GameContext = createContext<GameContextType | null>(null)
 
 export function GameProvider({ children }: { children: ReactNode }) {
-	const [players, setPlayers] = useState<number | null>(null)
-	const [teams, setTeams] = useState<number | null>(null)
-	const [playerList, setPlayerList] = useState<Player[]>([])
+	const [players, setPlayers] = useState<Player[]>([])
+	const [teamCount, setTeamCount] = useState<number | null>(null)
+	const [playerCount, setPlayerCount] = useState<number | null>(null)
 
-	return (
-		<GameContext.Provider
-			value={{
-				playerCount: players,
-				teamCount: teams,
-				updatePlayerCount: setPlayers,
-				updateTeamCount: setTeams,
-				players: playerList,
-				initializePlayers: setPlayerList,
-			}}
-		>
-			{children}
-		</GameContext.Provider>
+	const assignTeams = useCallback(
+		(teams: TeamInfo[], teamsPerPlayer: number) => {
+			setPlayers((prevPlayers) => {
+				const availableTeams = teams.filter((team) => !team.assigned)
+
+				return prevPlayers.map((player) => {
+					const assignedTeams: TeamInfo[] = []
+
+					for (
+						let i = 0;
+						i < teamsPerPlayer && availableTeams.length > 0;
+						i++
+					) {
+						const index = Math.floor(Math.random() * availableTeams.length)
+						assignedTeams.push(availableTeams.splice(index, 1)[0])
+					}
+
+					return {
+						...player,
+						assignedTeams: [...player.assignedTeams, ...assignedTeams],
+					}
+				})
+			})
+		},
+		[]
 	)
+
+	const value = useMemo(
+		() => ({
+			playerCount,
+			teamCount,
+			setPlayerCount,
+			setTeamCount,
+			players,
+			setPlayers,
+			assignTeams,
+		}),
+		[playerCount, teamCount, players, assignTeams]
+	)
+
+	return <GameContext.Provider value={value}>{children}</GameContext.Provider>
 }
 
-export default function useGame() {
+export function useGame() {
 	const context = useContext(GameContext)
 	if (!context) {
 		throw new Error("useGame must be used within a GameProvider")

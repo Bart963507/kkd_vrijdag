@@ -1,8 +1,8 @@
-import{r as t,b as B,P as R,C as J,c as X,O as l,d as H}from"./index-DUejRIDX.js";var M={root:"p-card p-component",header:"p-card-header",title:"p-card-title",subTitle:"p-card-subtitle",content:"p-card-content",footer:"p-card-footer",body:"p-card-body"},O=`
+import{r as t,b as B,P as R,C as J,c as X,O as l,d as H}from"./index-vqIfkjXN.js";var M={root:"p-card p-component",header:"p-card-header",title:"p-card-title",subTitle:"p-card-subtitle",content:"p-card-content",footer:"p-card-footer",body:"p-card-body"},O=`
 @layer primereact {
     .p-card-header img {
         width: 100%;
     }
 }
 `,o=J.extend({defaultProps:{__TYPE:"Card",id:null,header:null,footer:null,title:null,subTitle:null,style:null,className:null,children:void 0},css:{classes:M,styles:O}}),U=t.forwardRef(function(m,n){var a=B(),p=t.useContext(R),e=o.getProps(m,p),d=t.useRef(n),c=o.setMetaData({props:e}),r=c.ptm,s=c.cx,u=c.isUnstyled;X(o.css.styles,u,{name:"card"});var v=function(){var i=a({className:s("header")},r("header"));return e.header?t.createElement("div",i,l.getJSXElement(e.header,e)):null},f=function(){var i=a({className:s("title")},r("title")),E=e.title&&t.createElement("div",i,l.getJSXElement(e.title,e)),C=a({className:s("subTitle")},r("subTitle")),g=e.subTitle&&t.createElement("div",C,l.getJSXElement(e.subTitle,e)),N=a({className:s("content")},r("content")),T=e.children&&t.createElement("div",N,e.children),x=a({className:s("footer")},r("footer")),S=e.footer&&t.createElement("div",x,l.getJSXElement(e.footer,e)),_=a({className:s("body")},r("body"));return t.createElement("div",_,E,g,T,S)};t.useEffect(function(){l.combinedRefs(d,n)},[d,n]);var y=a({id:e.id,ref:d,style:e.style,className:H(e.className,s("root"))},o.getOtherProps(e),r("root")),b=v(),h=f();return t.createElement("div",y,b,h)});U.displayName="Card";const w="_gameCard_15b1y_1",j={gameCard:w};export{U as C,j as s};
-//# sourceMappingURL=shared.module-0GHuLlUq.js.map
+//# sourceMappingURL=shared.module-CIAm2s3W.js.map

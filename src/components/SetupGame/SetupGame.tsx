@@ -4,6 +4,7 @@ import { useNavigate } from "@tanstack/react-router"
 import { useGame } from "@/components/context/GameContext"
 import InputNames from "./InputNames"
 import { useState } from "react"
+import sharedStyles from "@/styles/shared.module.css"
 
 export default function SetupGame() {
 	const navigate = useNavigate()
@@ -22,13 +23,14 @@ export default function SetupGame() {
 			id: index + 1,
 			name: name || `Player ${index + 1}`,
 			assignedTeams: [],
+			beers: 0,
 		}))
 		setPlayers(playersArray)
 		navigate({ to: "/game-reveal" })
 	}
 
 	return (
-		<Card title="Welkom" className="game-card">
+		<Card title="Welkom" className={sharedStyles.gameCard}>
 			<p>Voer de namen van de {playerCount} spelers in:</p>
 			<InputNames count={playerCount} onNamesChange={setPlayerNames} />
 			<Button label="Bevestigen" onClick={setUpPlayers} />

@@ -8,11 +8,11 @@ import { useEffect } from "react"
 import { useNavigate } from "@tanstack/react-router"
 import { Button } from "primereact/button"
 import type { ColumnBodyOptions } from "primereact/column"
+import { syncToLocalStorage } from "@/components/context/GameContext"
 
 export default function GameReveal({ teamsInfo }: { teamsInfo: TeamInfo[] }) {
 	const { teamCount: teams, players: playerList, assignTeams } = useGame()
 	const navigate = useNavigate()
-
 	useEffect(() => {
 		assignTeams(teamsInfo, teams || 0)
 	}, [teamsInfo, teams, assignTeams])
@@ -22,21 +22,26 @@ export default function GameReveal({ teamsInfo }: { teamsInfo: TeamInfo[] }) {
 			<DataTable value={playerList} className={styles.gameRevealContainer}>
 				<Column field="name" header="Naam"></Column>
 				{Array.from({ length: teams || 0 }).map((_, teamIndex) =>
-					createColumns(teamIndex, playerList)
+					createColumns(teamIndex, playerList),
 				)}
 			</DataTable>
 			<Button
 				label="Bevestigen"
 				className="mt-2"
-				onClick={() => navigate({ to: "/game" })}
+				onClick={() => onStartGame(playerList)}
 			/>
 		</div>
 	)
+
+	function onStartGame(players: Player[]) {
+		syncToLocalStorage(players)
+		navigate({ to: "/game" })
+	}
 }
 
 function createColumns(
 	teamIndex: number,
-	assignedPlayerList: Player[]
+	assignedPlayerList: Player[],
 ): React.ReactElement {
 	return (
 		<Column
@@ -47,7 +52,7 @@ function createColumns(
 				const globalIndex = calcGlobalIndex(
 					teamIndex,
 					assignedPlayerList,
-					rowMeta
+					rowMeta,
 				)
 				const image = renderTeamLogo(rowData, teamIndex, globalIndex)
 				return image
@@ -59,7 +64,7 @@ function createColumns(
 function calcGlobalIndex(
 	teamIndex: number,
 	assignedPlayerList: Player[],
-	rowMeta: ColumnBodyOptions
+	rowMeta: ColumnBodyOptions,
 ) {
 	const playerIndex = rowMeta.rowIndex
 	const totalPlayers = assignedPlayerList.length
@@ -69,7 +74,7 @@ function calcGlobalIndex(
 function renderTeamLogo(
 	rowData: Player,
 	teamIndex: number,
-	globalIndex: number
+	globalIndex: number,
 ) {
 	return (
 		<img

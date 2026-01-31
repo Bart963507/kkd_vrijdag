@@ -6,6 +6,7 @@ import { Button } from "primereact/button"
 import InputNumberGame from "./InputNumberGame"
 import createTeamsInfo from "@/queries/fetchTeams"
 import { Message } from "primereact/message"
+import sharedStyles from "@/styles/shared.module.css"
 
 const checkNumberOfTeams = async function (): Promise<number> {
 	const teams = await createTeamsInfo()
@@ -39,7 +40,7 @@ export default function NewGame() {
 			const numberOfTeams = await checkNumberOfTeams()
 			if (players * teams > numberOfTeams) {
 				setErrorMessage(
-					`Er spelen vandaag ${numberOfTeams} teams. Pas het aantal spelers of teams per speler aan.`
+					`Er spelen vandaag ${numberOfTeams} teams. Pas het aantal spelers of teams per speler aan.`,
 				)
 				return
 			}
@@ -51,7 +52,7 @@ export default function NewGame() {
 	}
 
 	return (
-		<Card title="Nieuw Spel" className="game-card">
+		<Card title="Nieuw Spel" className={sharedStyles.gameCard}>
 			{errorMessage && (
 				<Message severity="error" text={errorMessage} className="mb-3" />
 			)}

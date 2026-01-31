@@ -12,6 +12,7 @@ export interface Player {
 	id: number
 	name: string
 	assignedTeams: TeamInfo[]
+	beers: number
 }
 
 interface GameContextType {
@@ -55,7 +56,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
 				})
 			})
 		},
-		[]
+		[],
 	)
 
 	const value = useMemo(
@@ -68,7 +69,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
 			setPlayers,
 			assignTeams,
 		}),
-		[playerCount, teamCount, players, assignTeams]
+		[playerCount, teamCount, players, assignTeams],
 	)
 
 	return <GameContext.Provider value={value}>{children}</GameContext.Provider>
@@ -79,5 +80,11 @@ export function useGame() {
 	if (!context) {
 		throw new Error("useGame must be used within a GameProvider")
 	}
+
 	return context
+}
+
+export function syncToLocalStorage(players: Player[]) {
+	console.log("Syncing to local storage:", players)
+	localStorage.setItem("game", JSON.stringify(players))
 }

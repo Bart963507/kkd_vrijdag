@@ -1,0 +1,9 @@
+.inputNumberGame {
+	display: flex;
+	flex-direction: column;
+}
+
+.inputNumberGameLabel {
+	font-size: 0.95rem;
+	color: #333;
+}

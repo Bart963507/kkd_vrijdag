@@ -1,4 +1,5 @@
 import { InputNumber } from "primereact/inputnumber"
+import styles from "./NewGame.module.css"
 
 interface InputNumberGameProps {
 	playerCount: number | null
@@ -11,20 +12,22 @@ export default function InputNumberGame({
 	setCount: setPlayerCount,
 	label,
 }: InputNumberGameProps) {
+	const inputId = `input-${label.toLowerCase().replace(/\s+/g, "-")}`
+
 	return (
-		<>
-			<label>
+		<div className={styles.inputNumberGame}>
+			<label htmlFor={inputId} className={styles.inputNumberGameLabel}>
 				<strong>{label}</strong>
 			</label>
 			<InputNumber
+				inputId={inputId}
 				showButtons
 				buttonLayout="horizontal"
-				className="input-numbers"
 				value={playerCount ?? 0}
 				onChange={(e) => setPlayerCount(e.value)}
 				min={0}
 				max={100}
 			/>
-		</>
+		</div>
 	)
 }

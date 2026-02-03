@@ -1,5 +1,6 @@
 import { InputText } from "primereact/inputtext"
 import { useState } from "react"
+import styles from "./SetupGame.module.css"
 
 interface InputNamesProps {
 	count: number
@@ -13,7 +14,7 @@ export default function InputNames({ count, onNamesChange }: InputNamesProps) {
 		const newNames = [...names]
 		newNames[index] = value
 		setNames(newNames)
-		onNamesChange(newNames) // ✅ Notify parent of changes
+		onNamesChange(newNames)
 	}
 
 	return (
@@ -22,9 +23,10 @@ export default function InputNames({ count, onNamesChange }: InputNamesProps) {
 				<div key={index}>
 					<InputText
 						placeholder={`Speler ${index + 1}`}
-						className="input-text"
+						className={styles.InputPlayerName}
 						value={names[index]}
 						onChange={(e) => handleNameChange(index, e.target.value)}
+						required={true}
 					/>
 				</div>
 			))}

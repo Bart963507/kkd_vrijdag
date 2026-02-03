@@ -51,7 +51,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
 					return {
 						...player,
-						assignedTeams: [...player.assignedTeams, ...assignedTeams],
+						assignedTeams: assignedTeams,
 					}
 				})
 			})

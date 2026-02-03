@@ -26,6 +26,9 @@ export default function SetupGame() {
 			beers: 0,
 		}))
 		setPlayers(playersArray)
+		if (playersArray.length === 0) {
+			throw new Error("No players to set up")
+		}
 		navigate({ to: "/game-reveal" })
 	}
 

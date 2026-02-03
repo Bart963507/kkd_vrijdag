@@ -11,6 +11,7 @@
 	margin: auto;
 	margin-top: 5vh;
 	text-align: center;
+	height: 50vh;
 }
 
 .gameRevealContainer :global(.p-datatable thead th) {
@@ -27,7 +28,6 @@
 	animation: flipReveal 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 	animation-delay: var(--delay);
 	object-fit: contain;
-	/* Ensure the final state is retained */
 	animation-fill-mode: forwards;
 	will-change: opacity, transform;
 	width: 100px;
@@ -35,6 +35,12 @@
 	margin: 5px;
 }
 
+.confirmButton {
+	margin-top: 20px;
+	justify-content: center;
+	width: 40%;
+	margin: 10px;
+}
 @keyframes flipReveal {
 	0% {
 		opacity: 0;

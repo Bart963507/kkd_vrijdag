@@ -18,8 +18,8 @@ export default function GameReveal({ teamsInfo }: { teamsInfo: TeamInfo[] }) {
 	}, [teamsInfo, teams, assignTeams])
 
 	return (
-		<div>
-			<DataTable value={playerList} className={styles.gameRevealContainer}>
+		<div className={styles.gameRevealContainer}>
+			<DataTable value={playerList}>
 				<Column field="name" header="Naam"></Column>
 				{Array.from({ length: teams || 0 }).map((_, teamIndex) =>
 					createColumns(teamIndex, playerList),
@@ -27,7 +27,7 @@ export default function GameReveal({ teamsInfo }: { teamsInfo: TeamInfo[] }) {
 			</DataTable>
 			<Button
 				label="Bevestigen"
-				className="mt-2"
+				className={styles.confirmButton}
 				onClick={() => onStartGame(playerList)}
 			/>
 		</div>

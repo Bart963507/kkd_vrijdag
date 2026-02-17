@@ -39,7 +39,12 @@
 	margin-top: 20px;
 	justify-content: center;
 	width: 40%;
+	min-width: 120px;
+	min-height: 44px;
 	margin: 10px;
+	padding: 12px 24px;
+	font-size: 16px;
+	-webkit-tap-highlight-color: transparent;
 }
 @keyframes flipReveal {
 	0% {

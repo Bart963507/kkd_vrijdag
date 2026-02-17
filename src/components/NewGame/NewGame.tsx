@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "@tanstack/react-router"
 import { useGame } from "@/components/context/GameContext"
-import { Card } from "primereact/card"
 import { Button } from "primereact/button"
 import InputNumberGame from "./InputNumberGame"
 import createTeamsInfo from "@/queries/fetchTeams"
@@ -52,7 +51,8 @@ export default function NewGame() {
 	}
 
 	return (
-		<Card title="Nieuw Spel" className={sharedStyles.gameCard}>
+		<div className={sharedStyles.gameCard}>
+			<h1> Nieuw Spel </h1>
 			{errorMessage && (
 				<Message severity="error" text={errorMessage} className="mb-3" />
 			)}
@@ -70,7 +70,11 @@ export default function NewGame() {
 				label="Aantal teams per speler"
 			/>
 			<br />
-			<Button label="Volgende" className="mt-2" onClick={onClickNext} />
-		</Card>
+			<Button
+				label="Volgende"
+				className={sharedStyles.startButton}
+				onClick={onClickNext}
+			/>
+		</div>
 	)
 }

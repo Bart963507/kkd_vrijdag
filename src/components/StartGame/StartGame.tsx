@@ -1,4 +1,3 @@
-import { Card } from "primereact/card"
 import { Button } from "primereact/button"
 import { useNavigate } from "@tanstack/react-router"
 import { useGame } from "../context/GameContext"
@@ -19,7 +18,8 @@ export default function StartGame() {
 	}
 
 	return (
-		<Card title="Welkom" className={sharedStyles.gameCard}>
+		<div className={sharedStyles.gameCard}>
+			<h1> Welkom </h1>
 			<p>
 				Welkom bij het KKD-vrijdag spel. Je hebt twee opties om te beginnen:
 			</p>
@@ -34,16 +34,16 @@ export default function StartGame() {
 			</p>
 			<Button
 				label="Nieuw Spel"
-				className={styles.startButton}
+				className={sharedStyles.startButton}
 				onClick={() => navigate({ to: "/new-game" })}
 			/>
 			<Button
 				label="Bestaand Spel"
-				className={styles.startButton}
+				className={sharedStyles.startButton}
 				disabled={!existingGameExists()}
 				onClick={() => onContinueGame()}
 			/>
-		</Card>
+		</div>
 	)
 }
 

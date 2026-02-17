@@ -33,10 +33,11 @@ export default function SetupGame() {
 	}
 
 	return (
-		<Card title="Welkom" className={sharedStyles.gameCard}>
-			<p>Voer de namen van de {playerCount} spelers in:</p>
+		<div className={sharedStyles.gameCard}>
+			<h2> Nieuw Spel </h2>
+			<p>Voer de namen van de spelers in:</p>
 			<InputNames count={playerCount} onNamesChange={setPlayerNames} />
 			<Button label="Bevestigen" onClick={setUpPlayers} />
-		</Card>
+		</div>
 	)
 }

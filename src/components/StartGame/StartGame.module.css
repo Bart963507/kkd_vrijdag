@@ -14,17 +14,12 @@ code {
 
 .inputText {
 	width: 80%;
-	padding: 8px;
+	padding: 12px;
 	margin: 5px 0;
-	font-size: 1rem;
+	font-size: 16px;
 	box-sizing: border-box;
 	border: 1px solid #ccc;
 	border-radius: 4px;
-}
-
-.startButton {
-	margin-top: 20px;
-	justify-content: center;
-	width: 40%;
-	margin: 10px;
+	-webkit-appearance: none;
+	appearance: none;
 }

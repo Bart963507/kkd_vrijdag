@@ -43,11 +43,7 @@ export default function Game({ playerList }: { playerList: Player[] }) {
 						key={index}
 						src={logoUrl}
 						alt={`Team logo ${index + 1}`}
-						style={{
-							width: "30px",
-							height: "30px",
-							objectFit: "contain",
-						}}
+						className={styles.teamLogo}
 						onError={(e) => {
 							console.error(`Failed to load image: ${logoUrl}`)
 							e.currentTarget.style.display = "none"

@@ -18,6 +18,12 @@
 	width: 25%;
 }
 
+.teamLogo {
+	width: 30px;
+	height: 30px;
+	object-fit: contain;
+}
+
 /* Add responsive styles for mobile */
 @media (max-width: 768px) {
 	.gameTable {

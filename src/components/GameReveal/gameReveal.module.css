@@ -74,6 +74,19 @@
 		width: 100%;
 		margin: 12px 0 0;
 	}
+
+	.logo {
+		opacity: 0;
+		transform: scale(0.8) rotateY(90deg);
+		animation: flipReveal 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+		animation-delay: var(--delay);
+		object-fit: contain;
+		animation-fill-mode: forwards;
+		will-change: opacity, transform;
+		width: 30px;
+		height: 30px;
+		margin: 5px;
+	}
 }
 @keyframes flipReveal {
 	0% {

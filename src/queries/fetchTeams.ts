@@ -8,7 +8,7 @@ export type TeamInfo = {
 	teamName: string
 	teamLogo: string
 	teamGoals: number
-	assigned: boolean
+	assigned: number
 }
 
 type Match = {
@@ -55,7 +55,7 @@ const parseTeams = async function (json: ApiResponse): Promise<TeamInfo[]> {
 	// const today = new Date().toISOString().split("T")[0]
 	const today = "2025-08-08" // For testing purposes
 	const filteredMatches = json.matches.filter(
-		(match: Match) => match.date === today
+		(match: Match) => match.date === today,
 	)
 
 	const teamPropsArray = filteredMatches.flatMap((match: Match) => [
@@ -63,13 +63,13 @@ const parseTeams = async function (json: ApiResponse): Promise<TeamInfo[]> {
 			teamName: match.awayContestant.contestantClubName,
 			teamLogo: match.awayContestant.contestantLogo,
 			teamGoals: match.scores?.away || 0,
-			assigned: false,
+			assigned: 0,
 		},
 		{
 			teamName: match.homeContestant.contestantClubName,
 			teamLogo: match.homeContestant.contestantLogo,
 			teamGoals: match.scores?.home || 0,
-			assigned: false,
+			assigned: 0,
 		},
 	])
 	return teamPropsArray

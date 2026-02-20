@@ -35,18 +35,30 @@ export function GameProvider({ children }: { children: ReactNode }) {
 	const assignTeams = useCallback(
 		(teams: TeamInfo[], teamsPerPlayer: number) => {
 			setPlayers((prevPlayers) => {
-				const availableTeams = teams.filter((team) => !team.assigned)
+				const mutableTeams = teams.map((team) => ({ ...team }))
 
 				return prevPlayers.map((player) => {
 					const assignedTeams: TeamInfo[] = []
 
-					for (
-						let i = 0;
-						i < teamsPerPlayer && availableTeams.length > 0;
-						i++
-					) {
-						const index = Math.floor(Math.random() * availableTeams.length)
-						assignedTeams.push(availableTeams.splice(index, 1)[0])
+					for (let i = 0; i < teamsPerPlayer && mutableTeams.length > 0; i++) {
+						const minAssigned = Math.min(
+							...mutableTeams.map((team) => team.assigned),
+						)
+						const candidates = mutableTeams.filter(
+							(team) => team.assigned === minAssigned,
+						)
+						const playerCandidates = candidates.filter(
+							(team) =>
+								!assignedTeams.some(
+									(assigned) => assigned.teamName === team.teamName,
+								),
+						)
+						const pool =
+							playerCandidates.length > 0 ? playerCandidates : candidates
+						const index = Math.floor(Math.random() * pool.length)
+						const chosenTeam = pool[index]
+						chosenTeam.assigned += 1
+						assignedTeams.push({ ...chosenTeam })
 					}
 
 					return {

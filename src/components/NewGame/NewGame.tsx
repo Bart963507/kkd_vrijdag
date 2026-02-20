@@ -35,19 +35,7 @@ export default function NewGame() {
 			return
 		}
 
-		try {
-			const numberOfTeams = await checkNumberOfTeams()
-			if (players * teams > numberOfTeams) {
-				setErrorMessage(
-					`Er spelen vandaag ${numberOfTeams} teams. Pas het aantal spelers of teams per speler aan.`,
-				)
-				return
-			}
-
-			navigate({ to: "/setup-game" })
-		} catch (error) {
-			setErrorMessage("Er is een fout opgetreden bij het controleren van teams")
-		}
+		navigate({ to: "/setup-game" })
 	}
 
 	return (

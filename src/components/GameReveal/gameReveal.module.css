@@ -18,6 +18,10 @@
 	text-align: center;
 }
 
+.gameRevealContainer :global(.p-datatable) {
+	width: 100%;
+}
+
 .gameRevealContainer :global(.p-column-header-content) {
 	justify-content: center;
 }
@@ -45,6 +49,31 @@
 	padding: 12px 24px;
 	font-size: 16px;
 	-webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 600px) {
+	.gameRevealContainer {
+		display: contents;
+		padding: 0;
+		background-color: transparent;
+		box-shadow: none;
+		border-radius: 0;
+		max-width: 100%;
+		margin: 0;
+		height: auto;
+		text-align: left;
+	}
+
+	.gameRevealContainer :global(.p-datatable) {
+		width: 100vw;
+		margin-left: 50%;
+		transform: translateX(-50%);
+	}
+
+	.confirmButton {
+		width: 100%;
+		margin: 12px 0 0;
+	}
 }
 @keyframes flipReveal {
 	0% {

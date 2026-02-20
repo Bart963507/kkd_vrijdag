@@ -1,5 +1,5 @@
 .gameTable {
-	width: 60vw; /* Adjust width for smaller screens */
+	width: 100%;
 	border-collapse: collapse;
 	font-family: Arial, sans-serif;
 	margin: auto;
@@ -21,7 +21,9 @@
 /* Add responsive styles for mobile */
 @media (max-width: 768px) {
 	.gameTable {
-		width: 100%; /* Use full width on mobile */
+		width: 100vw;
+		margin-left: 50%;
+		transform: translateX(-50%);
 		margin-top: 2vh; /* Reduce top margin further */
 	}
 

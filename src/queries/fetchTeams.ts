@@ -1,8 +1,8 @@
-// const TEAMS_URL =
-// 	"https://api.keukenkampioendivisie.nl/wp-json/statsperform/v1/current-round"
-
 const TEAMS_URL =
-	"https://api.keukenkampioendivisie.nl/wp-json/statsperform/v1/round-schedule"
+	"https://api.keukenkampioendivisie.nl/wp-json/statsperform/v1/current-round"
+
+// const TEAMS_URL =
+// 	"https://api.keukenkampioendivisie.nl/wp-json/statsperform/v1/round-schedule"
 
 export type TeamInfo = {
 	teamName: string
